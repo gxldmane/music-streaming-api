@@ -2,8 +2,8 @@
 
 namespace App\Http\Controllers\api\v1;
 
-use App\Http\Requests\StorePlaylistRequest;
-use App\Http\Requests\UpdatePlaylistRequest;
+use App\Http\Requests\v1\StorePlaylistRequest;
+use App\Http\Requests\v1\UpdatePlaylistRequest;
 use App\Models\Playlist;
 
 class PlaylistController extends Controller

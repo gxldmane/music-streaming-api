@@ -2,8 +2,8 @@
 
 namespace App\Http\Controllers\api\v1;
 
-use App\Http\Requests\StoreGenreRequest;
-use App\Http\Requests\UpdateGenreRequest;
+use App\Http\Requests\v1\StoreGenreRequest;
+use App\Http\Requests\v1\UpdateGenreRequest;
 use App\Models\Genre;
 
 class GenreController extends Controller

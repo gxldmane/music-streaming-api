@@ -3,8 +3,8 @@
 namespace App\Http\Controllers\api\v1;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\StoreLikeRequest;
-use App\Http\Requests\UpdateLikeRequest;
+use App\Http\Requests\v1\StoreLikeRequest;
+use App\Http\Requests\v1\UpdateLikeRequest;
 use App\Models\Like;
 
 class LikeController extends Controller

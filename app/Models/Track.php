@@ -16,7 +16,7 @@ class Track extends Model
         'title',
         'artist_id',
         'album_id',
-        'genre',
+        'genre_id',
         'file_path',
         'duration',
         'uploaded_by'

@@ -2,8 +2,8 @@
 
 namespace App\Http\Controllers\api\v1;
 
-use App\Http\Requests\StoreRatingRequest;
-use App\Http\Requests\UpdateRatingRequest;
+use App\Http\Requests\v1\StoreRatingRequest;
+use App\Http\Requests\v1\UpdateRatingRequest;
 use App\Models\Rating;
 
 class RatingController extends Controller

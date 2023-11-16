@@ -2,8 +2,8 @@
 
 namespace App\Http\Controllers\api\v1;
 
-use App\Http\Requests\StoreAlbumRequest;
-use App\Http\Requests\UpdateAlbumRequest;
+use App\Http\Requests\v1\StoreAlbumRequest;
+use App\Http\Requests\v1\UpdateAlbumRequest;
 use App\Models\Album;
 
 class AlbumController extends Controller

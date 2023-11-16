@@ -2,8 +2,8 @@
 
 namespace App\Http\Controllers\api\v1;
 
-use App\Http\Requests\StoreArtistRequest;
-use App\Http\Requests\UpdateArtistRequest;
+use App\Http\Requests\v1\StoreArtistRequest;
+use App\Http\Requests\v1\UpdateArtistRequest;
 use App\Models\Artist;
 
 class ArtistController extends Controller
