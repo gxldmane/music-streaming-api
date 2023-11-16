@@ -1,12 +1,12 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\api\v1;
 
-use App\Models\Track;
-use App\Http\Requests\StoreTrackRequest;
-use App\Http\Requests\UpdateTrackRequest;
+use App\Http\Requests\StoreRatingRequest;
+use App\Http\Requests\UpdateRatingRequest;
+use App\Models\Rating;
 
-class TrackController extends Controller
+class RatingController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -27,7 +27,7 @@ class TrackController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(StoreTrackRequest $request)
+    public function store(StoreRatingRequest $request)
     {
         //
     }
@@ -35,7 +35,7 @@ class TrackController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(Track $track)
+    public function show(Rating $rating)
     {
         //
     }
@@ -43,7 +43,7 @@ class TrackController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Track $track)
+    public function edit(Rating $rating)
     {
         //
     }
@@ -51,7 +51,7 @@ class TrackController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(UpdateTrackRequest $request, Track $track)
+    public function update(UpdateRatingRequest $request, Rating $rating)
     {
         //
     }
@@ -59,7 +59,7 @@ class TrackController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Track $track)
+    public function destroy(Rating $rating)
     {
         //
     }

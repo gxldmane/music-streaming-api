@@ -1,12 +1,13 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\api\v1;
 
-use App\Models\Genre;
-use App\Http\Requests\StoreGenreRequest;
-use App\Http\Requests\UpdateGenreRequest;
+use App\Http\Controllers\Controller;
+use App\Http\Requests\StoreLikeRequest;
+use App\Http\Requests\UpdateLikeRequest;
+use App\Models\Like;
 
-class GenreController extends Controller
+class LikeController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -27,7 +28,7 @@ class GenreController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(StoreGenreRequest $request)
+    public function store(StoreLikeRequest $request)
     {
         //
     }
@@ -35,7 +36,7 @@ class GenreController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(Genre $genre)
+    public function show(Like $like)
     {
         //
     }
@@ -43,7 +44,7 @@ class GenreController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Genre $genre)
+    public function edit(Like $like)
     {
         //
     }
@@ -51,7 +52,7 @@ class GenreController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(UpdateGenreRequest $request, Genre $genre)
+    public function update(UpdateLikeRequest $request, Like $like)
     {
         //
     }
@@ -59,7 +60,7 @@ class GenreController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Genre $genre)
+    public function destroy(Like $like)
     {
         //
     }

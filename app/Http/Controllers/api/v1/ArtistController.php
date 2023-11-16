@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\api\v1;
 
-use App\Models\Artist;
 use App\Http\Requests\StoreArtistRequest;
 use App\Http\Requests\UpdateArtistRequest;
+use App\Models\Artist;
 
 class ArtistController extends Controller
 {

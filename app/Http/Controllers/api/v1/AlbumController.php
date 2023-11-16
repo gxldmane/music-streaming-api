@@ -1,12 +1,12 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\api\v1;
 
-use App\Models\Review;
-use App\Http\Requests\StoreReviewRequest;
-use App\Http\Requests\UpdateReviewRequest;
+use App\Http\Requests\StoreAlbumRequest;
+use App\Http\Requests\UpdateAlbumRequest;
+use App\Models\Album;
 
-class ReviewController extends Controller
+class AlbumController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -27,7 +27,7 @@ class ReviewController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(StoreReviewRequest $request)
+    public function store(StoreAlbumRequest $request)
     {
         //
     }
@@ -35,7 +35,7 @@ class ReviewController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(Review $review)
+    public function show(Album $album)
     {
         //
     }
@@ -43,7 +43,7 @@ class ReviewController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Review $review)
+    public function edit(Album $album)
     {
         //
     }
@@ -51,7 +51,7 @@ class ReviewController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(UpdateReviewRequest $request, Review $review)
+    public function update(UpdateAlbumRequest $request, Album $album)
     {
         //
     }
@@ -59,7 +59,7 @@ class ReviewController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Review $review)
+    public function destroy(Album $album)
     {
         //
     }

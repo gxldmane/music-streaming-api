@@ -1,12 +1,12 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\api\v1;
 
-use App\Models\Rating;
-use App\Http\Requests\StoreRatingRequest;
-use App\Http\Requests\UpdateRatingRequest;
+use App\Http\Requests\StoreGenreRequest;
+use App\Http\Requests\UpdateGenreRequest;
+use App\Models\Genre;
 
-class RatingController extends Controller
+class GenreController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -27,7 +27,7 @@ class RatingController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(StoreRatingRequest $request)
+    public function store(StoreGenreRequest $request)
     {
         //
     }
@@ -35,7 +35,7 @@ class RatingController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(Rating $rating)
+    public function show(Genre $genre)
     {
         //
     }
@@ -43,7 +43,7 @@ class RatingController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Rating $rating)
+    public function edit(Genre $genre)
     {
         //
     }
@@ -51,7 +51,7 @@ class RatingController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(UpdateRatingRequest $request, Rating $rating)
+    public function update(UpdateGenreRequest $request, Genre $genre)
     {
         //
     }
@@ -59,7 +59,7 @@ class RatingController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Rating $rating)
+    public function destroy(Genre $genre)
     {
         //
     }
