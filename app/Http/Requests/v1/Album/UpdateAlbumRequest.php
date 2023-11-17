@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Requests\v1;
+namespace App\Http\Requests\v1\Album;
 
 use Illuminate\Foundation\Http\FormRequest;
 
@@ -11,7 +11,7 @@ class UpdateAlbumRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return false;
+        return true;
     }
 
     /**
@@ -22,7 +22,11 @@ class UpdateAlbumRequest extends FormRequest
     public function rules(): array
     {
         return [
-            //
+            'title' => ['sometimes', 'string', 'max:255', 'required'],
+            'artist_id' => ['sometimes','integer', 'required'],
+            'genre_id' => ['sometimes','integer', 'max:255', 'required'],
+            'released_date' => ['sometimes','date_format:Y-m-d', 'max:255', 'required'],
+            'cover_image' => ['sometimes','file', 'max:255', 'required'],
         ];
     }
 }

@@ -2,65 +2,53 @@
 
 namespace App\Http\Controllers\api\v1;
 
-use App\Http\Requests\v1\StoreAlbumRequest;
-use App\Http\Requests\v1\UpdateAlbumRequest;
+use App\Http\Requests\v1\Album\StoreAlbumRequest;
+use App\Http\Requests\v1\Album\UpdateAlbumRequest;
+use App\Http\Resources\v1\Album\AlbumCollection;
+use App\Http\Resources\v1\Album\AlbumResource;
 use App\Models\Album;
+use Spatie\QueryBuilder\QueryBuilder;
 
 class AlbumController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
+
     public function index()
     {
-        //
+        $albums = QueryBuilder::for(Album::class)
+            ->allowedIncludes('tracks')
+            ->allowedFilters('artist_id', 'genre_id', 'title')
+            ->paginate();
+
+        return new AlbumCollection($albums);
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     */
     public function store(StoreAlbumRequest $request)
     {
-        //
+        $data = $request->validated();
+
+        $album = Album::create($data);
+
+        return new AlbumResource($album);
     }
 
-    /**
-     * Display the specified resource.
-     */
     public function show(Album $album)
     {
-        //
+        return new AlbumResource(($album)->load('tracks'));
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(Album $album)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     */
     public function update(UpdateAlbumRequest $request, Album $album)
     {
-        //
+        $data = $request->validated();
+
+        $album->update($data);
+
+        return new AlbumResource($album);
     }
 
-    /**
-     * Remove the specified resource from storage.
-     */
     public function destroy(Album $album)
     {
-        //
+        $album->delete();
+
+        return response()->noContent();
     }
 }

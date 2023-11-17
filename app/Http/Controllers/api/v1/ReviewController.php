@@ -2,8 +2,8 @@
 
 namespace App\Http\Controllers\api\v1;
 
-use App\Http\Requests\v1\StoreReviewRequest;
-use App\Http\Requests\v1\UpdateReviewRequest;
+use App\Http\Requests\v1\Review\StoreReviewRequest;
+use App\Http\Requests\v1\Review\UpdateReviewRequest;
 use App\Models\Review;
 
 class ReviewController extends Controller

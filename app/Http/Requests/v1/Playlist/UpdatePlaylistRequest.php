@@ -1,17 +1,17 @@
 <?php
 
-namespace App\Http\Requests\v1;
+namespace App\Http\Requests\v1\Playlist;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class UpdateRatingRequest extends FormRequest
+class UpdatePlaylistRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
      */
     public function authorize(): bool
     {
-        return false;
+        return true;
     }
 
     /**
@@ -22,7 +22,11 @@ class UpdateRatingRequest extends FormRequest
     public function rules(): array
     {
         return [
-            //
+            'title' => ['string', 'required', 'max:30'],
+            'description' => ['string', 'required', 'max:255'],
+            'created_by' => ['integer', 'required', 'exists:users,id'],
+            'track_ids' => ['required', 'array'],
+            'track_ids.*' => ['exists:tracks,id'],
         ];
     }
 }

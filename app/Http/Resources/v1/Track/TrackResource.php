@@ -1,10 +1,9 @@
 <?php
 
-namespace App\Http\Resources\v1;
+namespace App\Http\Resources\v1\Track;
 
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
-use Illuminate\Support\Facades\Auth;
 
 class TrackResource extends JsonResource
 {
@@ -16,6 +15,7 @@ class TrackResource extends JsonResource
     public function toArray(Request $request): array
     {
         return [
+            'id' => $this->id,
             'title' => $this->title,
             'artist_id' => $this->artist_id,
             'album_id' => $this->album_id,

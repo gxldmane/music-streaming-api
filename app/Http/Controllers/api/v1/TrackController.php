@@ -2,10 +2,10 @@
 
 namespace App\Http\Controllers\api\v1;
 
-use App\Http\Requests\v1\StoreTrackRequest;
-use App\Http\Requests\v1\UpdateTrackRequest;
-use App\Http\Resources\v1\TrackCollection;
-use App\Http\Resources\v1\TrackResource;
+use App\Http\Requests\v1\Track\StoreTrackRequest;
+use App\Http\Requests\v1\Track\UpdateTrackRequest;
+use App\Http\Resources\v1\Track\TrackCollection;
+use App\Http\Resources\v1\Track\TrackResource;
 use App\Models\Track;
 use Spatie\QueryBuilder\QueryBuilder;
 
@@ -30,6 +30,11 @@ class TrackController extends Controller
         $data = $request->validated();
 
         $track = Track::create($data);
+
+        $albumId = $track['album_id'];
+
+        $track->album()->associate($albumId);
+        $track->save();
 
         return new TrackResource($track);
     }

@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Http\Requests\v1;
+namespace App\Http\Requests\v1\Genre;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class StoreTrackRequest extends FormRequest
+class StoreGenreRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -22,12 +22,7 @@ class StoreTrackRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'title' => ['string', 'max:100', 'required'],
-            'artist_id' => ['integer', 'exists:artists,id'],
-            'album_id' => ['integer', 'nullable', 'exists:albums,id'],
-            'genre_id' => ['integer', 'exists:genres,id'],
-            'file_path' => ['string', 'required', 'max:255'],
-            'duration' => ['integer', 'required']
+            'title' => ['string', 'max:20', 'required']
         ];
     }
 }

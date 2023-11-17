@@ -1,17 +1,17 @@
 <?php
 
-namespace App\Http\Requests\v1;
+namespace App\Http\Requests\v1\Album;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class StorePlaylistRequest extends FormRequest
+class StoreAlbumRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
      */
     public function authorize(): bool
     {
-        return false;
+        return true;
     }
 
     /**
@@ -22,7 +22,11 @@ class StorePlaylistRequest extends FormRequest
     public function rules(): array
     {
         return [
-            //
+            'title' => ['string', 'max:255', 'required'],
+            'artist_id' => ['integer', 'required'],
+            'genre_id' => ['integer', 'max:255', 'required'],
+            'release_date' => ['date_format:Y-m-d', 'max:255', 'required'],
+            'cover_image' => ['string', 'max:255', 'required'],
         ];
     }
 }

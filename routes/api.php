@@ -20,4 +20,7 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 
 Route::group(['namespace' => 'App\Http\Controllers\api\v1', 'prefix' => 'v1'], function () {
         Route::apiResource('tracks', 'TrackController');
+        Route::apiResource('albums', 'AlbumController');
+        Route::apiResource('genres', 'GenreController');
+        Route::apiResource('playlists', 'PlaylistController');
 });

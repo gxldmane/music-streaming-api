@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Http\Requests\v1;
+namespace App\Http\Requests\v1\Like;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class UpdateArtistRequest extends FormRequest
+class UpdateLikeRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.

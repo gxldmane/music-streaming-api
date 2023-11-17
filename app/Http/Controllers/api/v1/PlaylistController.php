@@ -2,65 +2,56 @@
 
 namespace App\Http\Controllers\api\v1;
 
-use App\Http\Requests\v1\StorePlaylistRequest;
-use App\Http\Requests\v1\UpdatePlaylistRequest;
+use App\Http\Requests\v1\Playlist\StorePlaylistRequest;
+use App\Http\Requests\v1\Playlist\UpdatePlaylistRequest;
+use App\Http\Resources\v1\Playlist\PlaylistCollection;
+use App\Http\Resources\v1\Playlist\PlaylistResource;
 use App\Models\Playlist;
+use Spatie\QueryBuilder\QueryBuilder;
 
 class PlaylistController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
     public function index()
     {
-        //
+        $playlists = QueryBuilder::for(Playlist::class)
+            ->allowedIncludes('tracks')
+            ->paginate();
+
+        return new PlaylistCollection($playlists);
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     */
     public function store(StorePlaylistRequest $request)
     {
-        //
+        $data = $request->validated();
+
+        $playlist = Playlist::create($data);
+
+        $playlist->tracks()->attach($data['track_ids']);
+
+        return new PlaylistResource($playlist);
     }
 
-    /**
-     * Display the specified resource.
-     */
     public function show(Playlist $playlist)
     {
-        //
+        return new PlaylistResource(($playlist)->load('tracks'));
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(Playlist $playlist)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     */
     public function update(UpdatePlaylistRequest $request, Playlist $playlist)
     {
-        //
+        $data = $request->validated();
+
+        $playlist->update($data);
+
+        if ($data['track_ids']) {
+            $playlist->tracks()->sync($data['track_ids']);
+        }
+
+        return new PlaylistResource($playlist);
     }
 
-    /**
-     * Remove the specified resource from storage.
-     */
     public function destroy(Playlist $playlist)
     {
-        //
+        $playlist->delete();
+        return response()->noContent();
     }
 }

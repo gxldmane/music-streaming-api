@@ -1,17 +1,17 @@
 <?php
 
-namespace App\Http\Requests\v1;
+namespace App\Http\Requests\v1\Genre;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class StoreGenreRequest extends FormRequest
+class UpdateGenreRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
      */
     public function authorize(): bool
     {
-        return false;
+        return true;
     }
 
     /**
@@ -22,7 +22,7 @@ class StoreGenreRequest extends FormRequest
     public function rules(): array
     {
         return [
-            //
-        ];
+            'title' => ['sometimes', 'string', 'max:20', 'required']
+        ];;
     }
 }
