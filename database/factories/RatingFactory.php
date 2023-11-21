@@ -23,7 +23,7 @@ class RatingFactory extends Factory
         return [
             'user_id' => $userId,
             'track_id' => $trackId,
-            'rating' => random_int(0, 10),
+            'rating' => random_int(1, 10),
         ];
     }
 }

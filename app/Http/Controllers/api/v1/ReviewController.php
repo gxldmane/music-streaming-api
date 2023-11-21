@@ -4,63 +4,53 @@ namespace App\Http\Controllers\api\v1;
 
 use App\Http\Requests\v1\Review\StoreReviewRequest;
 use App\Http\Requests\v1\Review\UpdateReviewRequest;
+use App\Http\Resources\v1\Review\ReviewCollection;
+use App\Http\Resources\v1\Review\ReviewResource;
 use App\Models\Review;
+use Spatie\QueryBuilder\QueryBuilder;
 
 class ReviewController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
+
     public function index()
     {
-        //
+        $reviews = QueryBuilder::for(Review::class)
+            ->allowedSorts('created_at', 'updated_at')
+            ->paginate();
+
+        return new ReviewCollection($reviews);
+
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-        //
-    }
 
-    /**
-     * Store a newly created resource in storage.
-     */
     public function store(StoreReviewRequest $request)
     {
-        //
+        $data = $request->validated();
+
+        $review = Review::create($data);
+
+        return new ReviewResource($review);
     }
 
-    /**
-     * Display the specified resource.
-     */
+
     public function show(Review $review)
     {
-        //
+        return new ReviewResource($review);
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(Review $review)
-    {
-        //
-    }
 
-    /**
-     * Update the specified resource in storage.
-     */
     public function update(UpdateReviewRequest $request, Review $review)
     {
-        //
+        $data = $request->validated();
+        $review->update($data);
+
+        return new ReviewResource($review);
     }
 
-    /**
-     * Remove the specified resource from storage.
-     */
     public function destroy(Review $review)
     {
-        //
+        $review->delete();
+
+        return response()->noContent();
     }
 }

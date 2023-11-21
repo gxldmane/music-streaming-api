@@ -24,7 +24,7 @@ class StoreAlbumRequest extends FormRequest
         return [
             'title' => ['string', 'max:255', 'required'],
             'artist_id' => ['integer', 'required'],
-            'genre_id' => ['integer', 'max:255', 'required'],
+            'genre_id' => ['integer', 'required', 'exists:genres,id'],
             'release_date' => ['date_format:Y-m-d', 'max:255', 'required'],
             'cover_image' => ['string', 'max:255', 'required'],
         ];

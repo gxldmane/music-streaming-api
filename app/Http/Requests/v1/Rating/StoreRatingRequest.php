@@ -11,7 +11,7 @@ class StoreRatingRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return false;
+        return true;
     }
 
     /**
@@ -22,7 +22,9 @@ class StoreRatingRequest extends FormRequest
     public function rules(): array
     {
         return [
-            //
+            'user_id' => ['integer', 'exists:users,id'],
+            'track_id' => ['integer', 'exists:tracks,id'],
+            'rating' => ['integer', 'between:1,10', 'required']
         ];
     }
 }

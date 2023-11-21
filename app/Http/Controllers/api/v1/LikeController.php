@@ -2,66 +2,56 @@
 
 namespace App\Http\Controllers\api\v1;
 
-use App\Http\Controllers\Controller;
-use App\Http\Requests\v1\Like\StoreLikeRequest;
-use App\Http\Requests\v1\Like\UpdateLikeRequest;
+use App\Models\Album;
 use App\Models\Like;
+use App\Models\Playlist;
+use App\Models\Track;
+use Illuminate\Support\Facades\Auth;
 
 class LikeController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
-    public function index()
+    public function likeTrack($trackId)
     {
-        //
+        return $this->toggleLike(Track::class, $trackId);
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
+    public function likeAlbum($albumId)
     {
-        //
+        return $this->toggleLike(Album::class, $albumId);
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
-    public function store(StoreLikeRequest $request)
+    public function likePlaylist($playlistId)
     {
-        //
+        return $this->toggleLike(Playlist::class, $playlistId);
     }
 
-    /**
-     * Display the specified resource.
-     */
-    public function show(Like $like)
+    private function toggleLike($modelClass, $modelId)
     {
-        //
-    }
+        $userId = 1;
 
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(Like $like)
-    {
-        //
-    }
+        $model = $modelClass::findOrFail($modelId);
 
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(UpdateLikeRequest $request, Like $like)
-    {
-        //
-    }
 
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(Like $like)
-    {
-        //
+        $like = Like::where('likable_id', $modelId)
+            ->where('user_id', $userId)
+            ->where('likable_type', $modelClass)
+            ->first();
+
+
+        if ($like) {
+            // Удаляем лайк, если уже поставлен
+
+            $like->delete();
+            $message = 'Unliked successfully';
+        } else {
+            // Создаем лайк, если еще не поставлен
+            $model->likes()->create([
+                'user_id' => $userId,
+            ]);
+
+            $message = 'Liked successfully';
+        }
+
+        return response()->json(['message' => $message]);
     }
 }

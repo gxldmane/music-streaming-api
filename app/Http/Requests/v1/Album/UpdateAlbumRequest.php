@@ -24,7 +24,7 @@ class UpdateAlbumRequest extends FormRequest
         return [
             'title' => ['sometimes', 'string', 'max:255', 'required'],
             'artist_id' => ['sometimes','integer', 'required'],
-            'genre_id' => ['sometimes','integer', 'max:255', 'required'],
+            'genre_id' => ['sometimes','integer', 'required', 'exists:genres,id'],
             'released_date' => ['sometimes','date_format:Y-m-d', 'max:255', 'required'],
             'cover_image' => ['sometimes','file', 'max:255', 'required'],
         ];

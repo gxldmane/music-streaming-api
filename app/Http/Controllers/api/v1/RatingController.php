@@ -4,63 +4,48 @@ namespace App\Http\Controllers\api\v1;
 
 use App\Http\Requests\v1\Rating\StoreRatingRequest;
 use App\Http\Requests\v1\Rating\UpdateRatingRequest;
+use App\Http\Resources\v1\Rating\RatingCollection;
+use App\Http\Resources\v1\Rating\RatingResource;
 use App\Models\Rating;
+use Spatie\QueryBuilder\QueryBuilder;
 
 class RatingController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
+
     public function index()
     {
-        //
+        $ratings = QueryBuilder::for(Rating::class)
+            ->allowedSorts('rating', 'created_at', 'updated_at')
+            ->paginate();
+
+        return new RatingCollection($ratings);
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     */
     public function store(StoreRatingRequest $request)
     {
-        //
+        $data = $request->validated();
+
+        $rating = Rating::create($data);
+
+        return new RatingResource($rating);
     }
 
-    /**
-     * Display the specified resource.
-     */
     public function show(Rating $rating)
     {
-        //
+        return new RatingResource($rating);
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(Rating $rating)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     */
     public function update(UpdateRatingRequest $request, Rating $rating)
     {
-        //
+        $data = $request->validated();
+        $rating->update($data);
+        return new RatingResource($rating);
     }
 
-    /**
-     * Remove the specified resource from storage.
-     */
     public function destroy(Rating $rating)
     {
-        //
+        $rating->delete();
+
+        return response()->noContent();
     }
 }

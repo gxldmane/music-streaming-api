@@ -4,63 +4,48 @@ namespace App\Http\Controllers\api\v1;
 
 use App\Http\Requests\v1\Artist\StoreArtistRequest;
 use App\Http\Requests\v1\Artist\UpdateArtistRequest;
+use App\Http\Resources\v1\Artist\ArtistCollection;
+use App\Http\Resources\v1\Artist\ArtistResource;
 use App\Models\Artist;
+use Spatie\QueryBuilder\QueryBuilder;
 
 class ArtistController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
     public function index()
     {
-        //
+        $artists = QueryBuilder::for(Artist::class)
+            ->allowedIncludes('tracks')
+            ->paginate();
+
+        return new ArtistCollection($artists);
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     */
     public function store(StoreArtistRequest $request)
     {
-        //
+        $data = $request->validated();
+
+        $artist = Artist::create($data);
+
+        return new ArtistResource($artist);
     }
 
-    /**
-     * Display the specified resource.
-     */
     public function show(Artist $artist)
     {
-        //
+        return new ArtistResource(($artist)->load('tracks'));
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(Artist $artist)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     */
     public function update(UpdateArtistRequest $request, Artist $artist)
     {
-        //
+        $data = $request->validated();
+        $artist->update($data);
+
+        return new ArtistResource($artist);
     }
 
-    /**
-     * Remove the specified resource from storage.
-     */
     public function destroy(Artist $artist)
     {
-        //
+        $artist->delete();
+
+        return response()->noContent();
     }
 }

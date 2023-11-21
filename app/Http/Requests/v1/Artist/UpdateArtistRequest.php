@@ -11,7 +11,7 @@ class UpdateArtistRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return false;
+        return true;
     }
 
     /**
@@ -22,7 +22,9 @@ class UpdateArtistRequest extends FormRequest
     public function rules(): array
     {
         return [
-            //
+            'name' => ['sometimes', 'string', 'max:40', 'required'],
+            'genre_id' => ['sometimes','exists:genres,id', 'integer'],
+            'bio' => ['sometimes','string', 'max:255', 'required']
         ];
     }
 }
