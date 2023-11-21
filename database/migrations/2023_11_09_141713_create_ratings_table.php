@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id();
             $table->foreignId('user_id')->constrained('users');
             $table->foreignId('track_id')->constrained('tracks');
-            $table->unsignedBigInteger('rating')->nullable();
+            $table->unsignedBigInteger('rating');
             $table->timestamps();
         });
     }

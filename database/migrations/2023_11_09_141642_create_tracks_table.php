@@ -15,11 +15,11 @@ return new class extends Migration
             $table->id();
             $table->string('title');
             $table->foreignId('artist_id')->constrained('artists');
-            $table->foreignId('album_id')->constrained('albums');
+            $table->foreignId('album_id')->nullable()->constrained('albums');
             $table->foreignId('genre_id')->constrained('genres');
             $table->string('file_path');
             $table->unsignedBigInteger('duration');
-            $table->foreignId('uploaded_by')->constrained('users');
+            $table->foreignId('uploaded_by')->default(1)->constrained('users');
             $table->timestamps();
         });
     }

@@ -2,14 +2,13 @@
 
 namespace Database\Factories;
 
-use App\Models\Track;
 use App\Models\User;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
- * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Rating>
+ * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Like>
  */
-class RatingFactory extends Factory
+class LikeFactory extends Factory
 {
     /**
      * Define the model's default state.
@@ -19,11 +18,10 @@ class RatingFactory extends Factory
     public function definition(): array
     {
         $userId = User::inRandomOrder()->value('id');
-        $trackId = Track::inRandomOrder()->value('id');
         return [
             'user_id' => $userId,
-            'track_id' => $trackId,
-            'rating' => random_int(1, 10),
+            'likable_type' => $this->faker->randomElement(['track', 'album', 'playlist', 'artist']),
+            'likable_id' => $this->faker->unique()->numberBetween(1, 100),
         ];
     }
 }

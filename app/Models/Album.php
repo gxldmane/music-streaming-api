@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\MorphMany;
 
 class Album extends Model
 {
@@ -14,7 +15,7 @@ class Album extends Model
     protected $fillable = [
         'title',
         'artist_id',
-        'genre',
+        'genre_id',
         'release_date',
         'cover_image'
     ];
@@ -37,5 +38,10 @@ class Album extends Model
     public function genre(): BelongsTo
     {
         return $this->belongsTo(Genre::class);
+    }
+
+    public function likes(): MorphMany
+    {
+        return $this->morphMany(Like::class, 'likable');
     }
 }
