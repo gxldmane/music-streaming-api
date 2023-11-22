@@ -2,56 +2,46 @@
 
 namespace App\Http\Controllers\api\v1;
 
+use App\Http\Resources\v1\Track\TrackCollection;
 use App\Models\Album;
 use App\Models\Like;
 use App\Models\Playlist;
 use App\Models\Track;
+use App\Services\LikeService;
 use Illuminate\Support\Facades\Auth;
 
 class LikeController extends Controller
 {
+    protected $likeService;
+
+    public function __construct(LikeService $likeService)
+    {
+        $this->likeService = $likeService;
+    }
+
     public function likeTrack($trackId)
     {
-        return $this->toggleLike(Track::class, $trackId);
+        return $this->likeService->toggleLike(Track::class, $trackId);
     }
 
     public function likeAlbum($albumId)
     {
-        return $this->toggleLike(Album::class, $albumId);
+        return $this->likeService->toggleLike(Album::class, $albumId);
     }
 
     public function likePlaylist($playlistId)
     {
-        return $this->toggleLike(Playlist::class, $playlistId);
+        return $this->likeService->toggleLike(Playlist::class, $playlistId);
     }
 
-    private function toggleLike($modelClass, $modelId)
-    {
+    public function userLikedTracks() {
         $userId = 1;
 
-        $model = $modelClass::findOrFail($modelId);
+        $likedTracks = $this->likeService->getLikedTracks($userId);
 
 
-        $like = Like::where('likable_id', $modelId)
-            ->where('user_id', $userId)
-            ->where('likable_type', $modelClass)
-            ->first();
-
-
-        if ($like) {
-            // Удаляем лайк, если уже поставлен
-
-            $like->delete();
-            $message = 'Unliked successfully';
-        } else {
-            // Создаем лайк, если еще не поставлен
-            $model->likes()->create([
-                'user_id' => $userId,
-            ]);
-
-            $message = 'Liked successfully';
-        }
-
-        return response()->json(['message' => $message]);
+        return $likedTracks;
     }
+
+
 }

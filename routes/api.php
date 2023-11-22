@@ -30,4 +30,6 @@ Route::group(['namespace' => 'App\Http\Controllers\api\v1', 'prefix' => 'v1'], f
         Route::post('/tracks/{trackId}/like', 'LikeController@likeTrack');
         Route::post('/albums/{albumId}/like', 'LikeController@likeAlbum');
         Route::post('/playlists/{playlistId}/like', 'LikeController@likePlaylist');
+
+        Route::get('/user/liked-tracks', 'LikeController@userLikedTracks');
 });
