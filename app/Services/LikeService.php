@@ -6,13 +6,13 @@ use App\Models\Album;
 use App\Models\Like;
 use App\Models\Playlist;
 use App\Models\Track;
+use App\Models\User;
 use Illuminate\Support\Facades\Auth;
 
 class LikeService
 {
-    public function toggleLike($modelClass, $modelId)
+    public function toggleLike($modelClass, $modelId, $userId)
     {
-        $userId = 1;
 
         $classMapping = [
             Track::class => 'track',
@@ -38,24 +38,4 @@ class LikeService
         return response()->json(['message' => $message]);
     }
 
-    public function getLikedTracks($userId) {
-        return Like::where('user_id', $userId)
-            ->where('likable_type', 'App\Models\Track')
-            ->with('likable')
-            ->get();
-    }
-
-    public function getLikedAlbums($userId) {
-        return Like::where('user_id', $userId)
-            ->where('likable_type', 'album')
-            ->with('likable')
-            ->paginate();
-    }
-
-    public function getLikedPlaylists($userId) {
-        return Like::where('user_id', $userId)
-            ->where('likable_type', 'playlist')
-            ->with('likable')
-            ->paginate();
-    }
 }

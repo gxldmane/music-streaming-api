@@ -29,7 +29,6 @@ class RatingPolicy
      */
     public function create(User $user): bool
     {
-        //
     }
 
     /**
@@ -37,7 +36,7 @@ class RatingPolicy
      */
     public function update(User $user, Rating $rating): bool
     {
-        //
+        return $user->role === 'admin' || $user->id === $rating->created_by;
     }
 
     /**
@@ -45,7 +44,7 @@ class RatingPolicy
      */
     public function delete(User $user, Rating $rating): bool
     {
-        //
+        return $user->role === 'admin' || $user->id === $rating->created_by;
     }
 
     /**
@@ -53,7 +52,7 @@ class RatingPolicy
      */
     public function restore(User $user, Rating $rating): bool
     {
-        //
+        return false;
     }
 
     /**
@@ -61,6 +60,6 @@ class RatingPolicy
      */
     public function forceDelete(User $user, Rating $rating): bool
     {
-        //
+        return false;
     }
 }

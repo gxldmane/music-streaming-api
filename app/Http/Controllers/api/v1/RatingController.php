@@ -7,6 +7,7 @@ use App\Http\Requests\v1\Rating\UpdateRatingRequest;
 use App\Http\Resources\v1\Rating\RatingCollection;
 use App\Http\Resources\v1\Rating\RatingResource;
 use App\Models\Rating;
+use Illuminate\Support\Facades\Auth;
 use Spatie\QueryBuilder\QueryBuilder;
 
 class RatingController extends Controller
@@ -37,15 +38,31 @@ class RatingController extends Controller
 
     public function update(UpdateRatingRequest $request, Rating $rating)
     {
-        $data = $request->validated();
-        $rating->update($data);
-        return new RatingResource($rating);
+        $userId = Auth::user()->id;
+        if ($rating->user_id == $userId) {
+            $data = $request->validated();
+            $rating->update($data);
+            return new RatingResource($rating);
+        }
+
+        return response()->json([
+            'message' => "Доступ запрещен"
+        ], 403);
+
+
     }
 
     public function destroy(Rating $rating)
     {
-        $rating->delete();
+        $userId = Auth::user()->id;
+        if ($rating->user_id == $userId) {
+            $rating->delete();
 
-        return response()->noContent();
+            return response()->noContent();
+        }
+
+        return response()->json([
+            'message' => "Доступ запрещен"
+        ], 403);
     }
 }

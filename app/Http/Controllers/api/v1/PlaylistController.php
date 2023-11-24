@@ -7,10 +7,17 @@ use App\Http\Requests\v1\Playlist\UpdatePlaylistRequest;
 use App\Http\Resources\v1\Playlist\PlaylistCollection;
 use App\Http\Resources\v1\Playlist\PlaylistResource;
 use App\Models\Playlist;
+use Illuminate\Support\Facades\Auth;
 use Spatie\QueryBuilder\QueryBuilder;
 
 class PlaylistController extends Controller
 {
+    public function __construct()
+    {
+        $this->authorizeResource(Playlist::class, 'playlist');
+    }
+
+
     public function index()
     {
         $playlists = QueryBuilder::for(Playlist::class)
@@ -38,20 +45,38 @@ class PlaylistController extends Controller
 
     public function update(UpdatePlaylistRequest $request, Playlist $playlist)
     {
-        $data = $request->validated();
+        $userId = Auth::user()->id;
+        if ($playlist->created_by == $userId) {
+            $data = $request->validated();
 
-        $playlist->update($data);
+            $playlist->update($data);
 
-        if ($data['track_ids']) {
-            $playlist->tracks()->sync($data['track_ids']);
+            if ($data['track_ids']) {
+                $playlist->tracks()->sync($data['track_ids']);
+            }
+
+            return new PlaylistResource($playlist);
         }
 
-        return new PlaylistResource($playlist);
+        return response()->json([
+            'message' => "Доступ запрещен"
+        ], 403);
+
+
     }
 
     public function destroy(Playlist $playlist)
     {
-        $playlist->delete();
-        return response()->noContent();
+        $userId = Auth::user()->id;
+        if ($playlist->created_by == $userId) {
+            $playlist->delete();
+            return response()->noContent();
+        }
+
+        return response()->json([
+            'message' => "Доступ запрещен"
+        ], 403);
+
+
     }
 }

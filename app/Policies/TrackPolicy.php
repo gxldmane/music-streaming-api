@@ -29,7 +29,7 @@ class TrackPolicy
      */
     public function create(User $user): bool
     {
-        //
+        return $user->role === 'admin';
     }
 
     /**
@@ -37,7 +37,7 @@ class TrackPolicy
      */
     public function update(User $user, Track $track): bool
     {
-        //
+        return $user->role === 'admin';
     }
 
     /**
@@ -45,7 +45,7 @@ class TrackPolicy
      */
     public function delete(User $user, Track $track): bool
     {
-        //
+        return $user->role === 'admin';
     }
 
     /**
@@ -53,7 +53,7 @@ class TrackPolicy
      */
     public function restore(User $user, Track $track): bool
     {
-        //
+        return false;
     }
 
     /**
@@ -61,6 +61,6 @@ class TrackPolicy
      */
     public function forceDelete(User $user, Track $track): bool
     {
-        //
+        return false;
     }
 }

@@ -29,7 +29,7 @@ class AlbumPolicy
      */
     public function create(User $user): bool
     {
-        //
+        return $user->role === 'admin';
     }
 
     /**
@@ -37,7 +37,7 @@ class AlbumPolicy
      */
     public function update(User $user, Album $album): bool
     {
-        //
+        return $user->role === 'admin';
     }
 
     /**
@@ -45,7 +45,7 @@ class AlbumPolicy
      */
     public function delete(User $user, Album $album): bool
     {
-        //
+        return $user->role === 'admin';
     }
 
     /**
@@ -53,7 +53,7 @@ class AlbumPolicy
      */
     public function restore(User $user, Album $album): bool
     {
-        //
+        return false;
     }
 
     /**
@@ -61,6 +61,6 @@ class AlbumPolicy
      */
     public function forceDelete(User $user, Album $album): bool
     {
-        //
+        return false;
     }
 }
