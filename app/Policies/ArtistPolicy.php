@@ -13,7 +13,7 @@ class ArtistPolicy
      */
     public function viewAny(User $user): bool
     {
-        //
+        return true;
     }
 
     /**
@@ -21,7 +21,7 @@ class ArtistPolicy
      */
     public function view(User $user, Artist $artist): bool
     {
-        //
+        return true;
     }
 
     /**

@@ -11,6 +11,7 @@ use App\Models\Rating;
 use App\Models\Review;
 use App\Models\Track;
 use App\Policies\AlbumPolicy;
+use App\Policies\ArtistPolicy;
 use App\Policies\GenrePolicy;
 use App\Policies\PlaylistPolicy;
 use App\Policies\RatingPolicy;
@@ -27,7 +28,7 @@ class AuthServiceProvider extends ServiceProvider
      */
     protected $policies = [
         Album::class => AlbumPolicy::class,
-        Artist::class => AlbumPolicy::class,
+        Artist::class => ArtistPolicy::class,
         Genre::class => GenrePolicy::class,
         Playlist::class => PlaylistPolicy::class,
         Rating::class => RatingPolicy::class,

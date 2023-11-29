@@ -22,7 +22,6 @@ class UpdateReviewRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'user_id' => ['sometimes', 'integer', 'exists:users,id'],
             'track_id' => ['sometimes','integer', 'exists:tracks,id'],
             'review_text' => ['sometimes','string', 'max:255', 'required']
         ];

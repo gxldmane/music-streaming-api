@@ -24,7 +24,6 @@ class StorePlaylistRequest extends FormRequest
         return [
             'title' => ['string', 'required', 'max:30'],
             'description' => ['string', 'required', 'max:255'],
-            'created_by' => ['integer', 'required', 'exists:users,id'],
             'track_ids' => ['required', 'array'],
             'track_ids.*' => ['exists:tracks,id'],
         ];

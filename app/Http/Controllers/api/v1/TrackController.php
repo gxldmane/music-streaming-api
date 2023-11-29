@@ -11,6 +11,10 @@ use Spatie\QueryBuilder\QueryBuilder;
 
 class TrackController extends Controller
 {
+    public function __construct()
+    {
+        $this->authorizeResource(Track::class, 'track');
+    }
     public function index()
     {
         $tracks = QueryBuilder::for(Track::class)

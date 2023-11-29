@@ -12,6 +12,10 @@ use Spatie\QueryBuilder\QueryBuilder;
 
 class RatingController extends Controller
 {
+    public function __construct()
+    {
+        $this->authorizeResource(Rating::class, 'rating');
+    }
 
     public function index()
     {
@@ -26,7 +30,7 @@ class RatingController extends Controller
     {
         $data = $request->validated();
 
-        $rating = Rating::create($data);
+        $rating = Auth::user()->ratings()->create($data);
 
         return new RatingResource($rating);
     }
@@ -38,31 +42,15 @@ class RatingController extends Controller
 
     public function update(UpdateRatingRequest $request, Rating $rating)
     {
-        $userId = Auth::user()->id;
-        if ($rating->user_id == $userId) {
-            $data = $request->validated();
-            $rating->update($data);
-            return new RatingResource($rating);
-        }
-
-        return response()->json([
-            'message' => "Доступ запрещен"
-        ], 403);
-
-
+        $data = $request->validated();
+        $rating->update($data);
+        return new RatingResource($rating);
     }
 
     public function destroy(Rating $rating)
     {
-        $userId = Auth::user()->id;
-        if ($rating->user_id == $userId) {
-            $rating->delete();
+        $rating->delete();
 
-            return response()->noContent();
-        }
-
-        return response()->json([
-            'message' => "Доступ запрещен"
-        ], 403);
+        return response()->noContent();
     }
 }

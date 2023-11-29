@@ -13,7 +13,7 @@ class TrackPolicy
      */
     public function viewAny(User $user): bool
     {
-        //
+        return true;
     }
 
     /**
@@ -21,7 +21,7 @@ class TrackPolicy
      */
     public function view(User $user, Track $track): bool
     {
-        //
+        return true;
     }
 
     /**
