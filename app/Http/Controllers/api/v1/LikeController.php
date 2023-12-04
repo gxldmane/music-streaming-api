@@ -5,6 +5,7 @@ namespace App\Http\Controllers\api\v1;
 use App\Http\Resources\v1\Like\LikeCollection;
 use App\Http\Resources\v1\Track\TrackCollection;
 use App\Models\Album;
+use App\Models\Artist;
 use App\Models\Like;
 use App\Models\Playlist;
 use App\Models\Track;
@@ -37,6 +38,12 @@ class LikeController extends Controller
     {
         $userId = Auth::user()->id;
         return $this->likeService->toggleLike(Playlist::class, $playlistId, $userId);
+    }
+
+    public function likeArtist($artistId)
+    {
+        $userId = Auth::user()->id;
+        return $this->likeService->toggleLike(Artist::class, $artistId, $userId);
     }
 
 

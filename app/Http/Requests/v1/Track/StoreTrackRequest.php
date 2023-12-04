@@ -29,9 +29,6 @@ class StoreTrackRequest extends FormRequest
             'genre_id' => [
                 'integer',
                 'exists:genres,id',
-                Rule::exists('albums', 'genre_id')->where(function ($query){
-                    $query->where('id', $this->input('album_id'));
-                })
             ],
             'file_path' => ['string', 'required', 'max:255'],
             'duration' => ['integer', 'required']

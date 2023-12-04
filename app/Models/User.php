@@ -61,15 +61,15 @@ class User extends Authenticatable
     }
 
 
-    public function likes(): MorphMany
+    public function likes(): HasMany
     {
-        return $this->morphMany(Like::class, 'likable');
+        return $this->hasMany(Like::class, 'user_id');
     }
 
 
     public function trackLikes()
     {
-        return $this->likes()->where('likable_type', 'track');
+        return $this->likes()->where('likable_type', 'App\Models\Track');
     }
 
     public function albumLikes()

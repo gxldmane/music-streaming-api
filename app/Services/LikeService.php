@@ -3,6 +3,7 @@
 namespace App\Services;
 
 use App\Models\Album;
+use App\Models\Artist;
 use App\Models\Like;
 use App\Models\Playlist;
 use App\Models\Track;
@@ -18,6 +19,7 @@ class LikeService
             Track::class => 'track',
             Playlist::class => 'playlist',
             Album::class => 'album',
+            Artist::class => 'artist',
         ];
 
         $like = Like::updateOrCreate(
