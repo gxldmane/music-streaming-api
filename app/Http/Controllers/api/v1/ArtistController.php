@@ -11,6 +11,11 @@ use Spatie\QueryBuilder\QueryBuilder;
 
 class ArtistController extends Controller
 {
+    public function __construct()
+    {
+        $this->authorizeResource(Artist::class, 'artist');
+    }
+
     public function index()
     {
         $artists = QueryBuilder::for(Artist::class)

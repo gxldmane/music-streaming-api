@@ -13,7 +13,7 @@ class AlbumPolicy
      */
     public function viewAny(User $user): bool
     {
-        //
+        return true;
     }
 
     /**
@@ -21,7 +21,7 @@ class AlbumPolicy
      */
     public function view(User $user, Album $album): bool
     {
-        //
+        return true;
     }
 
     /**

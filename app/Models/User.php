@@ -4,6 +4,7 @@ namespace App\Models;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\MorphMany;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
@@ -44,10 +45,27 @@ class User extends Authenticatable
         'password' => 'hashed',
     ];
 
-    public function likes():MorphMany
+    public function playlists(): HasMany
+    {
+        return $this->hasMany(Playlist::class, 'created_by');
+    }
+
+    public function ratings(): HasMany
+    {
+        return $this->hasMany(Rating::class);
+    }
+
+    public function reviews(): HasMany
+    {
+        return $this->hasMany(Review::class);
+    }
+
+
+    public function likes(): MorphMany
     {
         return $this->morphMany(Like::class, 'likable');
     }
+
 
     public function trackLikes()
     {

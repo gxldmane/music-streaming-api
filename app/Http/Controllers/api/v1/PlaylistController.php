@@ -31,7 +31,7 @@ class PlaylistController extends Controller
     {
         $data = $request->validated();
 
-        $playlist = Playlist::create($data);
+        $playlist = Auth::user()->playlists()->create($data);
 
         $playlist->tracks()->attach($data['track_ids']);
 
@@ -45,38 +45,21 @@ class PlaylistController extends Controller
 
     public function update(UpdatePlaylistRequest $request, Playlist $playlist)
     {
-        $userId = Auth::user()->id;
-        if ($playlist->created_by == $userId) {
-            $data = $request->validated();
+        $data = $request->validated();
 
-            $playlist->update($data);
+        $playlist->update($data);
 
-            if ($data['track_ids']) {
-                $playlist->tracks()->sync($data['track_ids']);
-            }
-
-            return new PlaylistResource($playlist);
+        if ($data['track_ids']) {
+            $playlist->tracks()->sync($data['track_ids']);
         }
 
-        return response()->json([
-            'message' => "Доступ запрещен"
-        ], 403);
-
+        return new PlaylistResource($playlist);
 
     }
 
     public function destroy(Playlist $playlist)
     {
-        $userId = Auth::user()->id;
-        if ($playlist->created_by == $userId) {
-            $playlist->delete();
-            return response()->noContent();
-        }
-
-        return response()->json([
-            'message' => "Доступ запрещен"
-        ], 403);
-
-
+        $playlist->delete();
+        return response()->noContent();
     }
 }

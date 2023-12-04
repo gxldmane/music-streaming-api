@@ -13,7 +13,7 @@ class PlaylistPolicy
      */
     public function viewAny(User $user): bool
     {
-        //
+        return true;
     }
 
     /**
@@ -21,7 +21,7 @@ class PlaylistPolicy
      */
     public function view(User $user, Playlist $playlist): bool
     {
-        //
+        return true;
     }
 
     /**
@@ -29,7 +29,7 @@ class PlaylistPolicy
      */
     public function create(User $user): bool
     {
-        //
+        return true;
     }
 
     /**

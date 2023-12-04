@@ -10,6 +10,11 @@ use App\Models\Genre;
 
 class GenreController extends Controller
 {
+    public function __construct()
+    {
+        $this->authorizeResource(Genre::class, 'genre');
+    }
+
     public function index()
     {
         return new GenreCollection(Genre::paginate());
