@@ -7,10 +7,15 @@ use App\Http\Requests\v1\Rating\UpdateRatingRequest;
 use App\Http\Resources\v1\Rating\RatingCollection;
 use App\Http\Resources\v1\Rating\RatingResource;
 use App\Models\Rating;
+use Illuminate\Support\Facades\Auth;
 use Spatie\QueryBuilder\QueryBuilder;
 
 class RatingController extends Controller
 {
+    public function __construct()
+    {
+        $this->authorizeResource(Rating::class, 'rating');
+    }
 
     public function index()
     {
@@ -25,7 +30,7 @@ class RatingController extends Controller
     {
         $data = $request->validated();
 
-        $rating = Rating::create($data);
+        $rating = Auth::user()->ratings()->create($data);
 
         return new RatingResource($rating);
     }

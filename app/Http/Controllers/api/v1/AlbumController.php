@@ -11,6 +11,11 @@ use Spatie\QueryBuilder\QueryBuilder;
 
 class AlbumController extends Controller
 {
+    public function __construct()
+    {
+        $this->authorizeResource(Album::class, 'album');
+    }
+
 
     public function index()
     {

@@ -18,14 +18,15 @@ return new class extends Migration
             $table->unsignedBigInteger('likable_id');
             $table->timestamps();
 
-            $table->foreign('likable_id')->references('id')->on('tracks')->onDelete('cascade');
-            $table->foreign('likable_id')->references('id')->on('albums')->onDelete('cascade');
-            $table->foreign('likable_id')->references('id')->on('playlists')->onDelete('cascade');
-            $table->foreign('likable_id')->references('id')->on('artists')->onDelete('cascade');
+            $table->foreign('likable_id')->references('id')->on('tracks')->onDelete('cascade')->index('likes_tracks_index');
+            $table->foreign('likable_id')->references('id')->on('albums')->onDelete('cascade')->index('likes_albums_index');
+            $table->foreign('likable_id')->references('id')->on('playlists')->onDelete('cascade')->index('likes_playlists_index');
+            $table->foreign('likable_id')->references('id')->on('artists')->onDelete('cascade')->index('likes_artists_index');
 
             $table->unique(['user_id', 'likable_type', 'likable_id']);
         });
     }
+
 
     /**
      * Reverse the migrations.

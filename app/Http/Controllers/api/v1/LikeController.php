@@ -2,56 +2,49 @@
 
 namespace App\Http\Controllers\api\v1;
 
+use App\Http\Resources\v1\Like\LikeCollection;
+use App\Http\Resources\v1\Track\TrackCollection;
 use App\Models\Album;
+use App\Models\Artist;
 use App\Models\Like;
 use App\Models\Playlist;
 use App\Models\Track;
+use App\Models\User;
+use App\Services\LikeService;
 use Illuminate\Support\Facades\Auth;
 
 class LikeController extends Controller
 {
+    protected $likeService;
+
+    public function __construct(LikeService $likeService)
+    {
+        $this->likeService = $likeService;
+    }
+
     public function likeTrack($trackId)
     {
-        return $this->toggleLike(Track::class, $trackId);
+        $userId = Auth::user()->id;
+        return $this->likeService->toggleLike(Track::class, $trackId, $userId);
     }
 
     public function likeAlbum($albumId)
     {
-        return $this->toggleLike(Album::class, $albumId);
+        $userId = Auth::user()->id;
+        return $this->likeService->toggleLike(Album::class, $albumId, $userId);
     }
 
     public function likePlaylist($playlistId)
     {
-        return $this->toggleLike(Playlist::class, $playlistId);
+        $userId = Auth::user()->id;
+        return $this->likeService->toggleLike(Playlist::class, $playlistId, $userId);
     }
 
-    private function toggleLike($modelClass, $modelId)
+    public function likeArtist($artistId)
     {
-        $userId = 1;
-
-        $model = $modelClass::findOrFail($modelId);
-
-
-        $like = Like::where('likable_id', $modelId)
-            ->where('user_id', $userId)
-            ->where('likable_type', $modelClass)
-            ->first();
-
-
-        if ($like) {
-            // Удаляем лайк, если уже поставлен
-
-            $like->delete();
-            $message = 'Unliked successfully';
-        } else {
-            // Создаем лайк, если еще не поставлен
-            $model->likes()->create([
-                'user_id' => $userId,
-            ]);
-
-            $message = 'Liked successfully';
-        }
-
-        return response()->json(['message' => $message]);
+        $userId = Auth::user()->id;
+        return $this->likeService->toggleLike(Artist::class, $artistId, $userId);
     }
+
+
 }

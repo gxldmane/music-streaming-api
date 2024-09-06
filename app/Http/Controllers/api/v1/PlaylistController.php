@@ -7,10 +7,17 @@ use App\Http\Requests\v1\Playlist\UpdatePlaylistRequest;
 use App\Http\Resources\v1\Playlist\PlaylistCollection;
 use App\Http\Resources\v1\Playlist\PlaylistResource;
 use App\Models\Playlist;
+use Illuminate\Support\Facades\Auth;
 use Spatie\QueryBuilder\QueryBuilder;
 
 class PlaylistController extends Controller
 {
+    public function __construct()
+    {
+        $this->authorizeResource(Playlist::class, 'playlist');
+    }
+
+
     public function index()
     {
         $playlists = QueryBuilder::for(Playlist::class)
@@ -24,7 +31,7 @@ class PlaylistController extends Controller
     {
         $data = $request->validated();
 
-        $playlist = Playlist::create($data);
+        $playlist = Auth::user()->playlists()->create($data);
 
         $playlist->tracks()->attach($data['track_ids']);
 
@@ -47,6 +54,7 @@ class PlaylistController extends Controller
         }
 
         return new PlaylistResource($playlist);
+
     }
 
     public function destroy(Playlist $playlist)

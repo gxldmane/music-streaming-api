@@ -22,7 +22,6 @@ class UpdateRatingRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'user_id' => ['sometimes', 'integer', 'exists:users,id'],
             'track_id' => ['sometimes','integer', 'exists:tracks,id'],
             'rating' => ['sometimes','integer', 'between:1,10', 'required']
         ];

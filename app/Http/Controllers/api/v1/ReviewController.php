@@ -7,10 +7,15 @@ use App\Http\Requests\v1\Review\UpdateReviewRequest;
 use App\Http\Resources\v1\Review\ReviewCollection;
 use App\Http\Resources\v1\Review\ReviewResource;
 use App\Models\Review;
+use Illuminate\Support\Facades\Auth;
 use Spatie\QueryBuilder\QueryBuilder;
 
 class ReviewController extends Controller
 {
+    public function __construct()
+    {
+        $this->authorizeResource(Review::class, 'review');
+    }
 
     public function index()
     {
@@ -27,7 +32,7 @@ class ReviewController extends Controller
     {
         $data = $request->validated();
 
-        $review = Review::create($data);
+        $review = Auth::user()->reviews()->create($data);
 
         return new ReviewResource($review);
     }
@@ -41,6 +46,7 @@ class ReviewController extends Controller
 
     public function update(UpdateReviewRequest $request, Review $review)
     {
+
         $data = $request->validated();
         $review->update($data);
 
@@ -49,8 +55,10 @@ class ReviewController extends Controller
 
     public function destroy(Review $review)
     {
+
         $review->delete();
 
         return response()->noContent();
+
     }
 }

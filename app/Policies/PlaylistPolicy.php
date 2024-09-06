@@ -13,7 +13,7 @@ class PlaylistPolicy
      */
     public function viewAny(User $user): bool
     {
-        //
+        return true;
     }
 
     /**
@@ -21,7 +21,7 @@ class PlaylistPolicy
      */
     public function view(User $user, Playlist $playlist): bool
     {
-        //
+        return true;
     }
 
     /**
@@ -29,7 +29,7 @@ class PlaylistPolicy
      */
     public function create(User $user): bool
     {
-        //
+        return true;
     }
 
     /**
@@ -37,7 +37,7 @@ class PlaylistPolicy
      */
     public function update(User $user, Playlist $playlist): bool
     {
-        //
+        return $user->role === 'admin' || $user->id === $playlist->created_by;
     }
 
     /**
@@ -45,7 +45,7 @@ class PlaylistPolicy
      */
     public function delete(User $user, Playlist $playlist): bool
     {
-        //
+        return $user->role === 'admin' || $user->id === $playlist->created_by;
     }
 
     /**
@@ -53,7 +53,7 @@ class PlaylistPolicy
      */
     public function restore(User $user, Playlist $playlist): bool
     {
-        //
+        return false;
     }
 
     /**
@@ -61,6 +61,6 @@ class PlaylistPolicy
      */
     public function forceDelete(User $user, Playlist $playlist): bool
     {
-        //
+        return false;
     }
 }

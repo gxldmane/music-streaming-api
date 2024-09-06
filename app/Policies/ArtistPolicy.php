@@ -13,7 +13,7 @@ class ArtistPolicy
      */
     public function viewAny(User $user): bool
     {
-        //
+        return true;
     }
 
     /**
@@ -21,7 +21,7 @@ class ArtistPolicy
      */
     public function view(User $user, Artist $artist): bool
     {
-        //
+        return true;
     }
 
     /**
@@ -29,7 +29,7 @@ class ArtistPolicy
      */
     public function create(User $user): bool
     {
-        //
+        return $user->role === 'admin';
     }
 
     /**
@@ -37,7 +37,7 @@ class ArtistPolicy
      */
     public function update(User $user, Artist $artist): bool
     {
-        //
+        return $user->role === 'admin';
     }
 
     /**
@@ -45,7 +45,7 @@ class ArtistPolicy
      */
     public function delete(User $user, Artist $artist): bool
     {
-        //
+        return $user->role === 'admin';
     }
 
     /**
@@ -53,7 +53,7 @@ class ArtistPolicy
      */
     public function restore(User $user, Artist $artist): bool
     {
-        //
+        return false;
     }
 
     /**
@@ -61,6 +61,6 @@ class ArtistPolicy
      */
     public function forceDelete(User $user, Artist $artist): bool
     {
-        //
+        return false;
     }
 }
