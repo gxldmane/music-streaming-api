@@ -4,6 +4,8 @@ namespace App\Models;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\MorphMany;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
@@ -42,4 +44,46 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
         'password' => 'hashed',
     ];
+
+    public function playlists(): HasMany
+    {
+        return $this->hasMany(Playlist::class, 'created_by');
+    }
+
+    public function ratings(): HasMany
+    {
+        return $this->hasMany(Rating::class);
+    }
+
+    public function reviews(): HasMany
+    {
+        return $this->hasMany(Review::class);
+    }
+
+
+    public function likes(): HasMany
+    {
+        return $this->hasMany(Like::class, 'user_id');
+    }
+
+
+    public function trackLikes()
+    {
+        return $this->likes()->where('likable_type', 'App\Models\Track');
+    }
+
+    public function albumLikes()
+    {
+        return $this->likes()->where('likable_type', 'album');
+    }
+
+    public function playlistLikes()
+    {
+        return $this->likes()->where('likable_type', 'playlist');
+    }
+
+    public function artistLikes()
+    {
+        return $this->likes()->where('likable_type', 'artist');
+    }
 }
